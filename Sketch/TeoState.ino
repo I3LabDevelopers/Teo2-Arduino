@@ -16,10 +16,13 @@ long int timeStampSpeak, timeStampDistance;
 */
 
 void TeoStateInit() {
-  distance_to_person = 0;
+  
   distance_to_person_sum = 0;
   counter = 0;
   timeStampDistance = millis();
+  distance_to_person = measure_distance();
+  CurrentRegion = determineInteractionRegion(distance_to_person);
+  PastRegion = CurrentRegion;
 }
 
 void refreshTeoState() {
@@ -48,7 +51,7 @@ void refreshDistanceToPerson() {
       counter = 0;
       distance_to_person_sum = 0;
       timeStampDistance = millis();
-      PastRegion = CurrentRegion;         //TODO: Check if this is right 
+      PastRegion = CurrentRegion;        
       CurrentRegion = determineInteractionRegion(distance_to_person);
     }
 }
@@ -60,9 +63,9 @@ uint16_t distanceToPerson() {
 uint8_t determineInteractionRegion(uint16_t _distance) {
 
     if (_distance < 45) return Intimate;
-    if (_distance >= 45 && _distance < 120) return Personal;
-    if (_distance >= 120 && _distance < 300) return Social;
-    if (_distance >= 300 && _distance < 401) return Public;
+    if (_distance >= 45 && _distance < 100) return Personal;
+    if (_distance >= 100 && _distance < 200) return Social;
+    if (_distance >= 200 && _distance < 401) return Public;
     return Unknown;
 
 }

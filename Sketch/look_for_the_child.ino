@@ -6,25 +6,30 @@
 
 
 enum lookForTheChildStates {
-    Init, MoveLeft, MoveRight, CheckMovement, Finish
+    CheckTime,Init, MoveLeft, MoveRight, CheckMovement, Finish
 };
     
 lookForTheChildStates state, past_state;
-long int _timestamp;
+long int timeCheck;
+boolean childLeft = false;
+
 //Returns true if the conditions are set to execute behavior.
 boolean try_look_for_the_child() {
         InteractionRegion current = getCurrentRegion();
         InteractionRegion past = getPastRegion();
         
-        if (past < Social && current >= Social) {
+        if (past <= Social && current > Social) {
             setBehaviorToExecute(execute_look_for_the_child);
-            state = Init;
+            state = CheckTime;
+            timeCheck = millis();
+            childLeft = true;
             return true;    
         }
 
-        if (past >= Social && current < Social) {
+        if (past >= Social && current < Social && childLeft) {
             setBehaviorToExecute(execute_child_returns);
-            state = Init;
+            timeCheck = millis();
+            state = CheckTime;
             return true;
         }
         
@@ -33,9 +38,20 @@ boolean try_look_for_the_child() {
 
 // Returns true when is done executing the behavior
 boolean execute_look_for_the_child() {
-    
+
     switch (state) {
-        
+
+        case CheckTime:
+            if (millis() - timeCheck < 5000) {
+                if (getCurrentRegion() < Social) {
+                    setHappyMood();
+                    return true;
+                  } 
+            }
+            else 
+              state = Init;
+          break;
+
         case Init:
             setSadMood();
             drawFace();
@@ -44,7 +60,7 @@ boolean execute_look_for_the_child() {
             
         case MoveLeft:
             if (!positionCommanded()) {
-                rotate(60,2);
+                rotate(60,3);
                 state = CheckMovement;
                 past_state = MoveLeft;
             }
@@ -52,8 +68,8 @@ boolean execute_look_for_the_child() {
             
         case MoveRight:
             if (!positionCommanded()) {
-                rotate(-120,2);
-                speak("Dove sei?");
+                rotate(-120,3);
+                speak("dove sei");
                 state = CheckMovement;
                 past_state = MoveRight;
             }
@@ -66,7 +82,6 @@ boolean execute_look_for_the_child() {
                         state = MoveRight;
                      else {  
                         state = Finish;
-                        _timestamp = millis();
                      }
                 }
              break;
@@ -76,16 +91,29 @@ boolean execute_look_for_the_child() {
             break;
     }
 
+    if (getCurrentRegion() < Social) {
+       stop_position_control();
+       setHappyMood();
+       return true;  
+    }
+
     return false;
 }
 
-
-// 
-
 boolean execute_child_returns () {
-       Serial.println("ChildReturns");
+        childLeft = false;
         switch (state) {
-            
+            case CheckTime:
+               if (millis() - timeCheck < 2000) {
+                  if (getCurrentRegion() > Social) {
+                        setHappyMood();
+                        return true;
+                      } 
+                  }
+                else 
+                  state = Init;
+                break;
+
             case Init:
                 setHappyMood();
                 state = MoveLeft;
@@ -93,17 +121,28 @@ boolean execute_child_returns () {
                 
             case MoveLeft:
                 if (!positionCommanded()) {
-                    rotate(60,3);
-                    speak("gioca");
+                    moveLateral(0.1,2);
+                    speak("giochi");
                     state = CheckMovement;
                     past_state = MoveLeft;
                 }
                 break;
-                
+
+            case MoveRight:
+                if (!positionCommanded()) {
+                    moveLateral(-0.1,2);
+                    state = CheckMovement;
+                    past_state = MoveRight;
+                }
+                break;
+            
             case CheckMovement:
                 refreshPositionControl();
                 if (!positionCommanded()) {
-                         state = Finish;
+                     if (past_state == MoveLeft)
+                        state = MoveRight;
+                     else      
+                       state = Finish;
                  }
                  break;
              case Finish:

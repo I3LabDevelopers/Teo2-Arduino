@@ -16,12 +16,14 @@ boolean (*commandToExecute)();
 
 
 boolean Talk2TeoInit() {
+
     currentState = sense;
     behaviorExecuting = false;
     commandReceived = false;
     commandEnded = false;
     behaviorsOn = true;
     TeoStateInit();
+
 }
 
 

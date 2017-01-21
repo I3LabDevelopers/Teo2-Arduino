@@ -21,7 +21,7 @@ uint16_t measure_distance() {
         uint16_t ir, son;
 
         ir = irsensor.distance();
-        son = sonar.ping_cm(401);
+        son = sonar.ping_cm(400);
 //
 //        if (son > 70) return son;
 //        
@@ -29,7 +29,7 @@ uint16_t measure_distance() {
 //            if (ir < 70) return (ir+son)/2;
 //            return son;
 //        }
-
+        if (son == 0) return 500;
         return son;
     
     }

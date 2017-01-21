@@ -109,7 +109,12 @@ void positionControlInit() {
 
 boolean positionCommanded() {
         return commanded != none;
-    }
+}
+
+void stop_position_control() {
+  Stop();
+  commanded = none;
+}
 
 void refreshPositionControl() {
         boolean w1 = false, w2 = false, w3 = false;
@@ -219,5 +224,3 @@ inline int8_t sign(int x) {
         if (x == 0) return 0;
         return (x > 0? 1:-1);
     }
-
-

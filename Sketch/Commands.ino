@@ -71,12 +71,16 @@ void moveHandler() {
     }
   }
 
-  if (j == 3 && !isBehaviorExecuting()) {
-
+  if (j == 3) {
     setMovementParams(params[0], params[1], params[2]);
-    setCommandReceived(true);
-    setCommandToExecute(executeManualMovement);  
-    
+    if (params[0] == 0 && params[1] == 0 && params[2] == 0) {
+      executeManualMovement();
+      return;  
+    }
+    else if (!isBehaviorExecuting()){
+      setCommandReceived(true);
+      setCommandToExecute(executeManualMovement);  
+    }
   }
 
   else setCommandReceived(false);

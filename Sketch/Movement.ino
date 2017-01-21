@@ -46,8 +46,9 @@ void Go(float strafe, float forward, float angular) {
 
   if (strafe == 0 && forward == 0 && angular == 0)
     isTeoMoving = false;
-  else
+  else{
     isTeoMoving = true;
+  }
 }
 
 boolean isMoving() {
@@ -61,7 +62,7 @@ float str,forw,ang;
 void setMovementParams(float s, float f, float a) {
     str = s;
     forw = f;
-    ang = a;    
+    ang = a;  
 }
 
 boolean executeManualMovement() {

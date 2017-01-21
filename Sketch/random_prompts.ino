@@ -12,11 +12,11 @@ randomPromptsStates state_prompts, past_state_prompts;
 long int _timeStamp;
 
 const char* phrases[N_PHRASES] = {
-    "ciao", "bravo", "gioca", "grande"   
+    "ciao", "bravo", "giochi", "grande"   
 };
 
 boolean try_random_prompt() {
-    uint16_t t = random(10000,20000);
+    uint16_t t = random(30000,50000);
 
     if (getInactiveTime() >= t) {
         setBehaviorToExecute(execute_random_prompt);
@@ -30,7 +30,6 @@ boolean try_random_prompt() {
 boolean execute_random_prompt() {
 
     uint8_t p = random(N_PHRASES);
-//    BTSerial.println("Random Prompts");
     
     switch (state_prompts) {
         
@@ -42,7 +41,7 @@ boolean execute_random_prompt() {
             
         case Move1:
             if (!positionCommanded()) {
-                rotate(30,2);
+                rotate(30,3);
                 state_prompts = CheckMove;
                 past_state_prompts = Move1;
                 _timeStamp = millis();
@@ -55,7 +54,7 @@ boolean execute_random_prompt() {
             break;
         case Move2:
             if (!positionCommanded()) {
-                rotate(-30,2);
+                rotate(-30,3);
                 speak(phrases[p]);
                 state_prompts = CheckMove;
                 past_state_prompts = Move2;
