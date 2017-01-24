@@ -127,7 +127,7 @@ boolean executeSadBehavior() {
 
     case sadRotate:
       if (!positionCommanded()) {
-        rotate(180.0f, 5.0f);
+        rotate(180.0f, 4.0f);
         sadMovementState = sadCheckMovement;
         pastSadMovementState = sadRotate;
       }
@@ -174,7 +174,7 @@ boolean executeAngryBehavior() {
 
     case angryForward:
       if (!positionCommanded()) {
-        moveForward(0.4f, 1.0f);
+        moveForward(0.4f, 3.0f);
         angryMovementState = angryCheckMovement;
         pastAngryMovementState = angryForward;
       }
@@ -183,8 +183,8 @@ boolean executeAngryBehavior() {
     case angryVibration:
       if (!positionCommanded()) {
         angryVibrationCount--;  //the vibration stops when angryVibrationCount becomes equal to 0
-        moveLateral(0.01f, 2.0f);
-        moveLateral(-0.01f, 2.0f);
+        moveLateral(0.01f, 1.0f);
+        moveLateral(-0.01f, 1.0f);
         angryMovementState = angryCheckMovement;
         pastAngryMovementState = angryVibration;
       }
@@ -194,10 +194,12 @@ boolean executeAngryBehavior() {
       refreshPositionControl();
       if (!positionCommanded()) {
         if (pastAngryMovementState == angryForward)
-          angryMovementState = angryVibration;
+/*TO BE TESTED
+          angryMovementState = angryFinish;
         else if ((pastAngryMovementState == angryVibration) && (angryVibrationCount > 0))
               angryMovementState = angryVibration;
         else
+*/
           angryMovementState = angryFinish;
       }
       break;
@@ -234,7 +236,7 @@ boolean executeScaredBehavior() {
 
     case scaredBackward:
       if (!positionCommanded()) {
-        moveForward(-0.2f, 1.0f);
+        moveForward(-0.2f, 3.0f);
         scaredMovementState = scaredCheckMovement;
         pastScaredMovementState = scaredBackward;
       }
@@ -243,10 +245,9 @@ boolean executeScaredBehavior() {
     case scaredVibration:
       if (!positionCommanded()) {
         scaredVibrationCount--;  //the vibration stops when scaredVibrationCount becomes equal to 0
-        moveLateral(0.01f, 2.0f);
-        moveLateral(-0.01f, 2.0f);
+        moveLateral(0.01f, 1.0f);
+        moveLateral(-0.01f, 1.0f);
         scaredMovementState = scaredCheckMovement;
-        pastScaredMovementState = scaredVibration;
       }
       break;
 
@@ -254,10 +255,12 @@ boolean executeScaredBehavior() {
       refreshPositionControl();
       if (!positionCommanded()) {
         if (pastScaredMovementState == scaredBackward)
+/*TO BE TESTED
           scaredMovementState = scaredVibration;
         else if ((pastScaredMovementState == scaredVibration) && (scaredVibrationCount > 0))
               scaredMovementState = scaredVibration;
         else
+*/
           scaredMovementState = scaredFinish;
       }
       break;

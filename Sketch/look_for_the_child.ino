@@ -68,7 +68,7 @@ boolean execute_look_for_the_child() {
             
         case MoveRight:
             if (!positionCommanded()) {
-                rotate(-120.0f, 3.0f);
+                rotate(-120.0f, 5.0f);
                 speak("dove sei");
                 state = CheckMovement;
                 past_state = MoveRight;
