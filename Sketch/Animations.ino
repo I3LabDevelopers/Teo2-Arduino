@@ -39,33 +39,33 @@ ScaredAnimationStateEnum scaredAnimationState = scaredCenter;
 void animateEyes() {
 #ifdef BTDEBUG
 
-  BTSerial.println(F("Eyes animation...");
+  BTSerial.println(F("Eyes animation..."));
 #endif
   switch (moodState) {
     case happy:
 #ifdef BTDEBUG
-      BTSerial.println(F("Happy eyes animation...");
+      BTSerial.println(F("Happy eyes animation..."));
 #endif
       happyAnimationState = (rand() % 3); //random happyCenter/happyLeft/happyRight
       break;
 
     case sad:
 #ifdef BTDEBUG
-      BTSerial.println(F("Sad eyes animation...");
+      BTSerial.println(F("Sad eyes animation..."));
 #endif
       sadAnimationState = (rand() % 3); //random sadCenter/sadLeft/sadRight
       break;
 
     case angry:
 #ifdef BTDEBUG
-      BTSerial.println(F("Angry eyes animation...");
+      BTSerial.println(F("Angry eyes animation..."));
 #endif
       angryAnimationState = (rand() % 3); //random angryCenter/angryLeft/angryRight
       break;
 
     case scared:
 #ifdef BTDEBUG
-      BTSerial.println(F("Scared eyes animation...");
+      BTSerial.println(F("Scared eyes animation..."));
 #endif
       scaredAnimationState = (rand() % 3); //random scaredCenter/scaredLeft/scaredRight
       break;
@@ -77,12 +77,12 @@ void animateEyes() {
 //It draws the eyelashes randomly choosing between closed and open
 void animateEyelashes() {
 #ifdef BTDEBUG
-  BTSerial.println(F("Eyelashes animation...");
+  BTSerial.println(F("Eyelashes animation..."));
 #endif
   switch (moodState) {
     case happy:
 #ifdef BTDEBUG
-      BTSerial.println(F("Happy eyelashes animation...");
+      BTSerial.println(F("Happy eyelashes animation..."));
 #endif
       //random blink/no blink (3/0)
       if (((rand() % 2) * 3) == happyClosed) {
@@ -99,7 +99,7 @@ void animateEyelashes() {
 
     case sad:
 #ifdef BTDEBUG
-      BTSerial.println(F("Sad eyelashes animation...");
+      BTSerial.println(F("Sad eyelashes animation..."));
 #endif
       //random blink/no blink (3/0)
       if (((rand() % 2) * 3) == sadClosed) {
@@ -116,7 +116,7 @@ void animateEyelashes() {
 
     case angry:
 #ifdef BTDEBUG
-      BTSerial.println(F("Angry eyelashes animation...");
+      BTSerial.println(F("Angry eyelashes animation..."));
 #endif
       //random blink/no blink (3/0)
       if (((rand() % 2) * 3) == angryClosed) {
@@ -133,7 +133,7 @@ void animateEyelashes() {
 
     case scared:
 #ifdef BTDEBUG
-      BTSerial.println(F("Scared eyelashes animation...");
+      BTSerial.println(F("Scared eyelashes animation..."));
 #endif
       //random blink/no blink (3/0)
       if (((rand() % 2) * 3) == scaredClosed) {
@@ -155,16 +155,16 @@ void animateEyelashes() {
 void animateIdleStrips() {
   if (moodState == idle) {
 #ifdef BTDEBUG
-    BTSerial.println(F("Fixed strips animation...");
+    BTSerial.println(F("Fixed strips animation..."));
 #endif
-    drawFixedStrips();
+    drawBreathingStrips();
   }
 }
 
 void animateHappyStrips() {
   if (moodState == happy) {
 #ifdef BTDEBUG
-    BTSerial.println(F("Strips animation...");
+    BTSerial.println(F("Strips animation..."));
 #endif
     if (isMoving()) {
       drawFixedStrips();
@@ -178,7 +178,7 @@ void animateHappyStrips() {
 void animateSadStrips() {
   if (moodState == sad) {
 #ifdef BTDEBUG
-    BTSerial.println(F("Strips animation...");
+    BTSerial.println(F("Strips animation..."));
 #endif
     if (isMoving()) {
       drawFixedStrips();
@@ -192,7 +192,7 @@ void animateSadStrips() {
 void animateAngryStrips() {
   if (moodState == angry) {
 #ifdef BTDEBUG
-    BTSerial.println(F("Strips animation...");
+    BTSerial.println(F("Strips animation..."));
 #endif
     if (isMoving()) {
       drawFixedStrips();
@@ -206,7 +206,7 @@ void animateAngryStrips() {
 void animateScaredStrips() {
   if (moodState == scared) {
 #ifdef BTDEBUG
-    BTSerial.println(F("Strips animation...");
+    BTSerial.println(F("Strips animation..."));
 #endif
     if (isMoving()) {
       drawFixedStrips();
@@ -215,91 +215,4 @@ void animateScaredStrips() {
       drawBreathingStrips();
     }
   }
-}
-
-
-// =============== MOOD SETTERS ========================
-
-
-void setIdleMood() {
-#ifdef BTDEBUG
-  BTSerial.println(F("Mood changing to idle..."));
-#endif
-  moodState = idle;
-}
-
-void setHappyMood() {
-#ifdef BTDEBUG
-  BTSerial.println(F("Mood changing to happy..."));
-#endif
-  moodState = happy;
-}
-
-void setSadMood() {
-#ifdef BTDEBUG
-  BTSerial.println(F("Mood changing to sad..."));
-#endif
-  moodState = sad;
-}
-
-void setAngryMood() {
-#ifdef BTDEBUG
-  BTSerial.println(F("Mood changing to angry..."));
-#endif
-  moodState = angry;
-}
-
-void setScaredMood() {
-#ifdef BTDEBUG
-  BTSerial.println(F("Mood changing to scared..."));
-#endif
-  moodState = scared;
-}
-
-//==================== MOOD BEHAVIORS ==================
-
-boolean idleBehavior() {
-    setIdleMood();
-    return true;
-}
-
-boolean sadBehavior() {
-    setSadMood();
-    return true;
-}
-
-boolean angryBehavior() {
-    setAngryMood();
-    return true;
-}
-
-boolean scaredBehavior() {
-    setScaredMood();
-    return true;
-}
-
-boolean happyBehavior() {
-    setHappyMood();
-    return true;
-}
-
-// ==================== TIMER INIT ======================
-
-
-
-Timer timer;
-
-void timersInit() {
-  timer.every(3000, animateEyes);
-  timer.every(4000, animateEyelashes);
-  timer.every(4000, animateIdleStrips);
-  timer.every(4000, animateHappyStrips);
-  timer.every(1000, animateSadStrips);
-  timer.every(500, animateAngryStrips);
-  timer.every(500, animateScaredStrips);
-  timer.every(2000, ready);    
-}
-
-void timersRefresh() {
-     timer.update();  
 }

@@ -29,6 +29,8 @@ boolean Talk2TeoInit() {
 
 boolean Talk2Teo() {
 
+    timersRefresh();
+
     switch (currentState) {
         case sense:
             talk2teo_sense();
@@ -59,7 +61,6 @@ boolean Talk2Teo() {
 void talk2teo_sense() {
 
     refreshTeoState();
-    timersRefresh();
     
     if (commandReceived) {
         if (!behaviorExecuting)
@@ -86,7 +87,7 @@ void talk2teo_verifyRules() {
 void talk2teo_manualExecute() {
     
     resetInactiveTimeCounter();
-    commandEnded = commandToExecute();      // This function can either be blocking or not. The machine will remain in this state anyway until finished.
+    commandEnded = commandToExecute();      // This function can either be blocking or not. The machine will remain in this state anyway until finished. 
     
     if (commandEnded) {
         currentState = sense;
@@ -99,8 +100,9 @@ void talk2teo_chooseBehavior() {
     
     currentState = behaviorExecute;
     
-    if (try_look_for_the_child());
-    else if (try_random_prompt());
+    if (try_wakeup());
+    else if (try_look_for_the_child());
+    else if (try_random_prompt()); 
     else {
         currentState = sense;    
     }   

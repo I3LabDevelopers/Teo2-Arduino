@@ -136,7 +136,7 @@ static void setEyelashes() {
       break;
 
     default:  //idle
-      for (uint8_t i = 0; i < 24; i++) {
+      for (uint8_t i = 0; i < 28; i++) {
         matrix.drawPixel(idleEyelashes[i][0], idleEyelashes[i][1], matrix.Color(YELLOW));
       }
   }
@@ -237,12 +237,6 @@ static void setEyes() {
             matrix.drawPixel(scaredRightEyes[i][0], scaredRightEyes[i][1], matrix.Color(YELLOW));
           }
           break;
-      }
-      break;
-
-    default:  //idle
-      for (uint8_t i = 0; i < 6; i++) {
-        matrix.drawPixel(idleEyes[i][0], idleEyes[i][1], matrix.Color(YELLOW));
       }
   }
 }

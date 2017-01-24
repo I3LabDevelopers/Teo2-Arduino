@@ -2,10 +2,26 @@
 
 #define TIMEOUT_SPEAK 5000
 #define TIME_DISTANCE 500
+#define TOUCH_THRESHOLD 600
+#define CALL_THRESHOLD (0.3*255)
+
+#define MIC1_PIN A5
+#define FSR_PIN1 9
+#define FSR_PIN2 10
+#define FSR_PIN3 11
+#define FSR_PIN4 14
+#define FSR_PIN5 15
 
 uint32_t distance_to_person, distance_to_person_sum, counter;
 InteractionRegion CurrentRegion = Unknown, PastRegion = Unknown;
-ContactType lastTouch;
+
+int fsrPin[5] = {FSR_PIN1, FSR_PIN2, FSR_PIN3, FSR_PIN4, FSR_PIN5};
+int lastTouch[5];
+boolean isTouched; //it is true if at least one fsr has been touched
+
+byte lastHearing;
+boolean isCalled; //it is true if the mic1 has sensed
+
 boolean isSpeaking;
 unsigned long inactiveTimeStamp, inactiveTime;
 long int timeStampSpeak, timeStampDistance;
@@ -26,6 +42,8 @@ void TeoStateInit() {
 }
 
 void refreshTeoState() {
+    refreshHearing();
+    refreshTouch();
     refreshDistanceToPerson();
     checkManualCommands();
     updateInactiveTime();
@@ -35,6 +53,39 @@ void refreshTeoState() {
 void checkManualCommands() {
     while(BTSerial.available() > 0) 
         listenCommand();
+}
+    
+//==================== HEARING RELATED FUNCTIONS =========================
+//it refreshes lastHearing and isCalled
+void refreshHearing(){
+    lastHearing = analogRead(MIC1_PIN);
+    isCalled = ((lastHearing) >> 2 > CALL_THRESHOLD);
+#ifdef BTDEBUG
+    if isCalled
+        BTSerial.println(F("Called! Hearing value: " + String(lastHearing)));
+#endif
+
+}
+
+//==================== TOUCH RELATED FUNCTIONS =========================
+//it refreshes lastTouch[] and isTouched
+void refreshTouch(){
+  int currentTouch[5];
+  for(int i=0; i<5; i++){
+    //sensing
+    currentTouch[i] = analogRead(fsrPin[i]);
+
+    //comparing to the previous sensing
+    isTouched = (isTouched || (lastTouch[i]-currentTouch[i]) > TOUCH_THRESHOLD);
+
+#ifdef BTDEBUG
+    if isTouched
+      BTSerial.println(F("Touched!" + "Touch value of FSR" + String(i) +": " + String(currentTouch[i])));
+#endif
+
+    //refresh
+    lastTouch[i] = currentTouch[i];
+  }
 }
 
 //==================== DISTANCE RELATED FUNCTIONS =========================

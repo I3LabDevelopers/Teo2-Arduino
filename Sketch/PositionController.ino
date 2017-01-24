@@ -24,10 +24,10 @@ Encoder enc3(WHEEL3Y_PIN,WHEEL3W_PIN);
 //================== BLOCKING METHODS ============================//
 
 // command a rotation of angle (degrees) and wait till is done. Positive angle is counter-clockwise.
-void rotate_wait(float angle) {
+void rotate_wait(float angle, float vel) {
         int ticks = (int)((-_L/_R)*(angle*_TICKS_REV/360)); 
-        uint8_t _speed = angle < 0? -3:3;
-        
+        uint8_t _speed = angle < 0? (vel*-1):vel;
+
         enc1.write(0);
         enc2.write(0);
         enc3.write(0);

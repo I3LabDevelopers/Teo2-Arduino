@@ -1,9 +1,4 @@
 //Led matrix - eyes
-const uint8_t idleEyes[6][2]={
-  {7,5},{8,5},{9,5},
-  {7,10},{8,10},{9,10}
-};
-
 const uint8_t happyCenterEyes[6][2] = {
   {7,5},{8,5},{9,5},
   {7,10},{8,10},{9,10}

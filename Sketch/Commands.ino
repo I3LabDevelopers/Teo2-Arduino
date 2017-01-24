@@ -26,7 +26,7 @@ void BTCommInit() {
   
   CommandHandler.addDefaultHandler(unrecognized);
 #ifdef BTDEBUG
-  BTSerial.println(F("Init!");
+  BTSerial.println(F("Init!"));
 #endif
 }
 
@@ -88,28 +88,32 @@ void moveHandler() {
 
 void idleMoodHandler() {
      setCommandReceived(true);
-     setCommandToExecute(idleBehavior);
+     setCommandToExecute(executeIdleBehavior);
 }
 
 void happyMoodHandler() {
      setCommandReceived(true);
-     setCommandToExecute(happyBehavior);
+     initHappyMovement();
+     setCommandToExecute(executeHappyBehavior);
 }
 
 void sadMoodHandler() {
      
      setCommandReceived(true);
-     setCommandToExecute(sadBehavior);  
+     initSadMovement();
+     setCommandToExecute(executeSadBehavior);  
 }
 
 void angryMoodHandler() {
      setCommandReceived(true);
-     setCommandToExecute(angryBehavior);  
+     initAngryMovement();
+     setCommandToExecute(executeAngryBehavior);  
 }
 
 void scaredMoodHandler() {
      setCommandReceived(true);
-     setCommandToExecute(scaredBehavior);   
+     initScaredMovement();
+     setCommandToExecute(executeScaredBehavior);
 }
 
 void unrecognized() {
