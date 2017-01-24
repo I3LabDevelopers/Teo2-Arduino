@@ -63,7 +63,7 @@ boolean executeHappyBehavior() {
 
     case happyRotateLeft:
       if (!positionCommanded()) {
-        rotate(-30.0f, 3.0f);
+        rotate(-30.0f, 5.0f);
         happyMovementState = happyCheckMovement;
         pastHappyMovementState = happyRotateLeft;
       }
@@ -71,7 +71,7 @@ boolean executeHappyBehavior() {
 
     case happyRotateRight:
       if (!positionCommanded()) {
-        rotate(60.0f, 3.0f);
+        rotate(60.0f, 5.0f);
         happyMovementState = happyCheckMovement;
         pastHappyMovementState = happyRotateRight;
       }
@@ -79,7 +79,7 @@ boolean executeHappyBehavior() {
 
     case happyRotateToInitialPosition:
       if (!positionCommanded()) {
-        rotate(-30.0f, 3.0f);
+        rotate(-30.0f, 5.0f);
         happyMovementState = happyCheckMovement;
         pastHappyMovementState = happyRotateToInitialPosition;
       }
@@ -127,7 +127,7 @@ boolean executeSadBehavior() {
 
     case sadRotate:
       if (!positionCommanded()) {
-        rotate(180.0f, 3.0f);
+        rotate(180.0f, 5.0f);
         sadMovementState = sadCheckMovement;
         pastSadMovementState = sadRotate;
       }
@@ -183,8 +183,8 @@ boolean executeAngryBehavior() {
     case angryVibration:
       if (!positionCommanded()) {
         angryVibrationCount--;  //the vibration stops when angryVibrationCount becomes equal to 0
-        moveLateral(0.01f, 1.0f);
-        moveLateral(-0.01f, 1.0f);
+        moveLateral(0.01f, 2.0f);
+        moveLateral(-0.01f, 2.0f);
         angryMovementState = angryCheckMovement;
         pastAngryMovementState = angryVibration;
       }
@@ -243,8 +243,8 @@ boolean executeScaredBehavior() {
     case scaredVibration:
       if (!positionCommanded()) {
         scaredVibrationCount--;  //the vibration stops when scaredVibrationCount becomes equal to 0
-        moveLateral(0.01f, 1.0f);
-        moveLateral(-0.01f, 1.0f);
+        moveLateral(0.01f, 2.0f);
+        moveLateral(-0.01f, 2.0f);
         scaredMovementState = scaredCheckMovement;
         pastScaredMovementState = scaredVibration;
       }

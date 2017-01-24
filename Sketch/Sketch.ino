@@ -41,8 +41,6 @@ enum MoodStateEnum {
 };
 MoodStateEnum moodState = idle;
 
-
-
 void setup() {
   movementInit();
   BTCommInit();
@@ -52,10 +50,8 @@ void setup() {
 
   topStripInit();
   bottomStripInit();
-
   timersInit();
-  
-  
+
   positionControlInit();
   Talk2TeoInit();
 }

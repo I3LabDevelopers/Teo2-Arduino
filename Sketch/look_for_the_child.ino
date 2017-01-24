@@ -60,7 +60,7 @@ boolean execute_look_for_the_child() {
             
         case MoveLeft:
             if (!positionCommanded()) {
-                rotate(60,3);
+                rotate(60.0f, 5.0f);
                 state = CheckMovement;
                 past_state = MoveLeft;
             }
@@ -68,7 +68,7 @@ boolean execute_look_for_the_child() {
             
         case MoveRight:
             if (!positionCommanded()) {
-                rotate(-120,3);
+                rotate(-120.0f, 3.0f);
                 speak("dove sei");
                 state = CheckMovement;
                 past_state = MoveRight;
@@ -121,7 +121,7 @@ boolean execute_child_returns () {
                 
             case MoveLeft:
                 if (!positionCommanded()) {
-                    moveLateral(0.1,2);
+                    moveLateral(0.1f, 2.0f);
                     speak("giochi");
                     state = CheckMovement;
                     past_state = MoveLeft;
@@ -130,7 +130,7 @@ boolean execute_child_returns () {
 
             case MoveRight:
                 if (!positionCommanded()) {
-                    moveLateral(-0.1,2);
+                    moveLateral(-0.1f, 2.0f);
                     state = CheckMovement;
                     past_state = MoveRight;
                 }
